@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>簿記トレAI - 日商簿記3級学習アプリ</title>
+    <meta name="description" content="日商簿記3級合格を目指す方のための学習支援アプリ。仕訳問題・帳簿記入・精算表の全範囲対応、弱点分析、AI解説で効率的な学習をサポート。">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 50%, #1abc9c 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            color: white;
+        }
+
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            border-radius: 28px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .tagline {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: white;
+            color: #27ae60;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .features {
+            background-color: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #1d1d1f;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-item h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #1d1d1f;
+        }
+
+        .feature-item p {
+            color: #6e6e73;
+            line-height: 1.8;
+        }
+
+        .info-section {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-section h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #1d1d1f;
+        }
+
+        .info-section p {
+            color: #6e6e73;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .links {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .links h2 {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            color: #1d1d1f;
+        }
+
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .link-card {
+            text-align: center;
+            padding: 30px 20px;
+            border: 2px solid #e5e5e7;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #1d1d1f;
+            transition: all 0.3s;
+        }
+
+        .link-card:hover {
+            border-color: #27ae60;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.2);
+        }
+
+        .link-card-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .link-card-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .link-card-desc {
+            font-size: 0.9em;
+            color: #6e6e73;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            opacity: 0.9;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .tagline {
+                font-size: 1.1em;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .features {
+                padding: 40px 20px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <div class="app-icon">📒</div>
+            <h1>簿記トレAI</h1>
+            <p class="tagline">AI活用型 日商簿記3級学習アプリ</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">App Storeでダウンロード</a>
+                <a href="privacy.html" class="btn btn-secondary">プライバシーポリシー</a>
+            </div>
+        </div>
+
+        <div class="features">
+            <h2>主な機能</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">📝</div>
+                    <h3>仕訳問題演習</h3>
+                    <p>第1問対策の仕訳問題を豊富に収録。基礎から実践まで段階的に学習できます</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3>弱点分析</h3>
+                    <p>学習履歴から自動的に弱点を分析し、効率的な復習をサポート</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📋</div>
+                    <h3>全範囲対応</h3>
+                    <p>第1問（仕訳）・第2問（帳簿記入）・第3問（精算表）の全範囲をアプリ1つでカバー</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI解説</h3>
+                    <p>AIがあなたの理解度に合わせて問題を詳しく解説し、理解を深めます</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>簿記トレAIについて</h2>
+            <p>
+                簿記トレAIは、日商簿記3級の合格を目指す方のために開発されたAI活用型学習支援アプリです。
+                仕訳問題演習、帳簿記入、精算表対策、弱点分析、学習進捗管理など、試験対策に必要な機能を網羅しています。
+            </p>
+            <p>
+                AI技術（Anthropic Claude API等）を活用した解説機能により、間違えた問題の理解を深め、効率的な学習をサポートします。
+                あなたの学習パートナーとして、合格までの道のりをサポートします。
+            </p>
+        </div>
+
+        <div class="links">
+            <h2>リンク</h2>
+            <div class="link-grid">
+                <a href="privacy.html" class="link-card">
+                    <div class="link-card-icon">🔒</div>
+                    <div class="link-card-title">プライバシーポリシー</div>
+                    <div class="link-card-desc">個人情報の取り扱いについて</div>
+                </a>
+                <a href="mailto:contact@mesh-tax.com" class="link-card">
+                    <div class="link-card-icon">✉️</div>
+                    <div class="link-card-title">お問い合わせ</div>
+                    <div class="link-card-desc">contact@mesh-tax.com</div>
+                </a>
+                <a href="https://github.com/salmonist/bokitore_ai-legal" target="_blank" class="link-card">
+                    <div class="link-card-icon">💻</div>
+                    <div class="link-card-title">GitHub</div>
+                    <div class="link-card-desc">ソースコードを見る</div>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 簿記トレAI. All rights reserved.</p>
+            <p style="margin-top: 15px;">
+                <a href="privacy.html">プライバシーポリシー</a>
+                <a href="mailto:contact@mesh-tax.com">お問い合わせ</a>
+                <a href="https://github.com/salmonist/bokitore_ai-legal" target="_blank">GitHub</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
